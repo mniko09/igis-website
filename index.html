@@ -1132,7 +1132,10 @@
       <!-- Formulaire -->
       <div class="contact__form" role="form" aria-labelledby="form-title">
         <h3 class="form__title" id="form-title">Envoyer un message</h3>
-        <form method="POST" action="#" id="contact-form" novalidate aria-describedby="form-status">
+        <form action="https://api.web3forms.com/submit" method="POST" id="contact-form">
+
+          <!-- Clé d'accès Web3Forms -->
+          <input type="hidden" name="access_key" value="4c9ec4cc-25fa-460c-ab06-75970a7680d0">
 
           <div class="form__row">
             <div class="form__group">
@@ -1233,7 +1236,7 @@
       <div>
         <p class="footer__col-title">Contact rapide</p>
         <ul class="footer__links">
-          <li><a href="mailto:contact@igis-group.mg">contact@igis-group.mg</a></li>
+          <li><a href="mailto:contact@igis-group.mg">contact@igis-group.com</a></li>
           <li><a href="tel:+261320000000">+261 32 00 000 00</a></li>
           <li style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.5rem">Lot II M 85 Ambanidia<br>Antananarivo, Madagascar</li>
         </ul>
@@ -1291,7 +1294,7 @@
     navMob.classList.remove('is-open');
     navMob.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-  }
+  }a
 
   burger.addEventListener('click', () => {
     const isOpen = burger.getAttribute('aria-expanded') === 'true';
