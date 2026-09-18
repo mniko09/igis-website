@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IGIS Group — Bureau d'études spécialisé en géomatique, ingénierie de l'environnement et suivi du territoire. Nous mesurons ce qui change." />
+  <meta name="theme-color" content="#0E2C52" />
+  <title>IGIS Group — Nous mesurons ce qui change.</title>
+
+  <!-- Google Fonts : Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       TOKENS & RESET
+    ============================================================ */
+    :root {
+      --navy:      #0E2C52;
+      --bleu-igis: #123A6B;
+      --cyan:      #2BA6DE;
+      --ciel:      #6CC9EE;
+      --white:     #FFFFFF;
+      --gray-50:   #F7F9FC;
+      --gray-100:  #E8EEF5;
+      --gray-400:  #94A3B8;
+      --gray-700:  #334155;
+      --text-body: #1E3A5F;
+
+      --font:      'Poppins', sans-serif;
+      --radius:    12px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(14,44,82,.10);
+      --shadow-md: 0 8px 32px rgba(14,44,82,.15);
+      --shadow-lg: 0 16px 48px rgba(14,44,82,.22);
+
+      --transition: .3s ease;
+      --header-h:  72px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font);
+      color: var(--text-body);
+      background: var(--white);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    ul  { list-style: none; }
+    button, input, textarea, select { font-family: var(--font); }
+
+    /* ============================================================
+       UTILITAIRES
+    ============================================================ */
+    .container {
+      width: min(1200px, 100% - 2rem);
+      margin-inline: auto;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: .75rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 700; line-height: 1.25; color: var(--navy);
+    }
+    .section-title--white { color: var(--white); }
+    .section-lead {
+      margin-top: 1rem; font-size: 1.05rem; font-weight: 300;
+      color: var(--gray-700); max-width: 60ch;
+    }
+    .section-lead--white { color: rgba(255,255,255,.75); }
+
+    /* BOUTONS */
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.75rem; border-radius: 50px;
+      font-size: .95rem; font-weight: 600;
+      border: 2px solid transparent; cursor: pointer;
+      transition: background var(--transition), color var(--transition),
+                  border-color var(--transition), transform var(--transition),
+                  box-shadow var(--transition);
+    }
+    .btn:hover  { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .btn:active { transform: translateY(0); }
+    .btn--primary { background: var(--cyan); color: var(--white); }
+    .btn--primary:hover { background: #2295c8; }
+    .btn--outline {
+      background: transparent;
+      border-color: rgba(255,255,255,.55); color: var(--white);
+    }
+    .btn--outline:hover { background: rgba(255,255,255,.12); border-color: var(--white); }
+    .btn--dark { background: var(--navy); color: var(--white); }
+    .btn--dark:hover { background: var(--bleu-igis); }
+
+    /* BADGES */
+    .badge {
+      display: inline-block; padding: .25rem .75rem; border-radius: 50px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .badge--cyan { background: rgba(43,166,222,.15); color: var(--cyan); }
+    .badge--navy { background: var(--navy); color: var(--white); }
+    .badge--ciel { background: rgba(108,201,238,.18); color: #1a7fae; }
+
+    /* ============================================================
+       HEADER / NAV
+    ============================================================ */
+    #site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--header-h);
+      background: var(--navy);
+      border-bottom: 1px solid rgba(43,166,222,.2);
+      display: flex; align-items: center;
+      transition: box-shadow var(--transition);
+    }
+    #site-header.scrolled { box-shadow: 0 4px 24px rgba(14,44,82,.4); }
+
+    .header__inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1.5rem;
+    }
+    .header__brand {
+      display: flex; align-items: center; gap: .85rem; flex-shrink: 0;
+    }
+    .header__logo { height: 44px; width: auto; object-fit: contain; }
+    .header__site-name { font-size: 1.15rem; font-weight: 700; color: var(--white); letter-spacing: .02em; }
+    .header__site-name span { color: var(--cyan); }
+
+    .nav__list { display: flex; align-items: center; gap: .25rem; }
+    .nav__item a {
+      display: block; padding: .5rem .9rem; border-radius: 8px;
+      font-size: .9rem; font-weight: 500; color: rgba(255,255,255,.8);
+      transition: color var(--transition), background var(--transition);
+    }
+    .nav__item a:hover,
+    .nav__item a[aria-current="page"] { color: var(--cyan); background: rgba(43,166,222,.1); }
+    .nav__cta { margin-left: .5rem; }
+    .nav__cta a {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .5rem 1.25rem; background: var(--cyan);
+      color: var(--white) !important; border-radius: 50px;
+      font-size: .88rem; font-weight: 600;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .nav__cta a:hover { background: #2295c8; transform: translateY(-1px); }
+
+    .burger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; width: 40px; height: 40px;
+      background: none; border: none; cursor: pointer;
+      padding: 6px; border-radius: 8px;
+      transition: background var(--transition);
+    }
+    .burger:hover { background: rgba(255,255,255,.1); }
+    .burger span {
+      display: block; width: 100%; height: 2px;
+      background: var(--white); border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav--mobile {
+      display: none; position: fixed; top: var(--header-h); left: 0; right: 0;
+      background: var(--navy); border-top: 1px solid rgba(43,166,222,.2);
+      padding: 1rem 0 2rem; z-index: 999;
+      box-shadow: 0 12px 32px rgba(14,44,82,.5);
+    }
+    .nav--mobile.is-open { display: block; }
+    .nav--mobile .nav__list { flex-direction: column; gap: 0; }
+    .nav--mobile .nav__item a {
+      padding: .9rem 1.5rem; font-size: 1rem; border-radius: 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav--mobile .nav__cta { margin-left: 0; padding: 1rem 1.5rem 0; }
+    .nav--mobile .nav__cta a { display: inline-flex; }
+
+    /* ============================================================
+       SECTION HERO
+    ============================================================ */
+    #hero {
+      position: relative; min-height: 100svh;
+      display: flex; align-items: center;
+      background: var(--navy); overflow: hidden;
+      padding-top: var(--header-h);
+    }
+    .hero__bg-motif {
+      position: absolute; inset: 0;
+      background-image: url('Identit\u00e9 visuelle/motifIGIS/13-meandres-transparent-cyan.png');
+      background-size: cover; background-position: center;
+      opacity: .12; pointer-events: none;
+    }
+    .hero__band {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 90px;
+      background-image: url('Identit\u00e9 visuelle/motifIGIS/04-meandres-banniere.png');
+      background-size: cover; background-position: top;
+      opacity: .35;
+    }
+    .hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg,
+        rgba(14,44,82,.85) 0%, rgba(18,58,107,.60) 60%, rgba(43,166,222,.08) 100%);
+      pointer-events: none;
+    }
+    .hero__inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center; padding-block: 6rem;
+    }
+    .hero__content { max-width: 620px; }
+    .hero__eyebrow { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 1.5rem; }
+    .hero__eyebrow-line { width: 32px; height: 2px; background: var(--cyan); border-radius: 2px; }
+    .hero__eyebrow-text {
+      font-size: .8rem; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--cyan);
+    }
+    .hero__title {
+      font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 800;
+      line-height: 1.15; color: var(--white); margin-bottom: 1.5rem;
+    }
+    .hero__title .highlight { color: var(--cyan); }
+    .hero__subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300;
+      color: rgba(255,255,255,.78); line-height: 1.7;
+      margin-bottom: 2.5rem; max-width: 52ch;
+    }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .hero__stats {
+      display: flex; flex-wrap: wrap; gap: 2.5rem;
+      margin-top: 3rem; padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .hero__stat-value { font-size: 2rem; font-weight: 800; color: var(--cyan); line-height: 1; }
+    .hero__stat-label {
+      font-size: .8rem; font-weight: 400; color: rgba(255,255,255,.6);
+      margin-top: .2rem; text-transform: uppercase; letter-spacing: .06em;
+    }
+    .hero__visual {
+      position: relative; display: flex; justify-content: center; align-items: center;
+    }
+    .hero__img-frame {
+      position: relative; width: 100%; max-width: 520px;
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);
+    }
+    .hero__img-frame img { width: 100%; height: 420px; object-fit: cover; }
+    .hero__img-badge {
+      position: absolute; bottom: -1rem; left: -1rem;
+      background: var(--white); border-radius: var(--radius);
+      padding: 1rem 1.25rem; box-shadow: var(--shadow-md);
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .hero__img-badge-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--cyan), var(--ciel));
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .hero__img-badge-text strong { display: block; font-size: .9rem; font-weight: 700; color: var(--navy); }
+    .hero__img-badge-text span   { font-size: .75rem; color: var(--gray-400); }
+    .hero__scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      color: rgba(255,255,255,.45); font-size: .7rem; letter-spacing: .1em;
+      text-transform: uppercase; animation: bounce 2s infinite;
+    }
+    .hero__scroll-hint svg { opacity: .6; }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ============================================================
+       SECTION A PROPOS
+    ============================================================ */
+    #a-propos { padding-block: 6rem; background: var(--white); }
+    .about__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about__intro { font-size: 1.1rem; color: var(--text-body); margin-block: 1.25rem 1.75rem; line-height: 1.75; }
+    .about__body  { font-size: .97rem; color: var(--gray-700); line-height: 1.8; margin-bottom: 1.5rem; }
+    .about__pillars { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-block: 2rem 2.5rem; }
+    .about__pillar {
+      display: flex; align-items: flex-start; gap: .6rem;
+      padding: .9rem 1rem; background: var(--gray-50);
+      border-radius: var(--radius); border: 1px solid var(--gray-100);
+    }
+    .about__pillar-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--cyan), var(--ciel));
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    }
+    .about__pillar-text strong { display: block; font-size: .88rem; font-weight: 600; color: var(--navy); }
+    .about__pillar-text span   { font-size: .78rem; color: var(--gray-400); }
+    .about__visual { position: relative; }
+    .about__img-main  { width: 100%; height: 520px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+    .about__img-secondary {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      width: 220px; height: 160px; object-fit: cover;
+      border-radius: var(--radius); box-shadow: var(--shadow-md); border: 4px solid var(--white);
+    }
+    .about__motif-bg {
+      position: absolute; top: -2rem; left: -2rem;
+      width: 180px; height: 180px; opacity: .18; z-index: -1;
+    }
+
+    /* ============================================================
+       SECTION EXPERTISES
+    ============================================================ */
+    #expertises { padding-block: 6rem; background: var(--navy); position: relative; overflow: hidden; }
+    .expertises__motif {
+      position: absolute; top: 0; right: 0; width: 420px; height: 420px;
+      background-image: url('Identit\u00e9 visuelle/motifIGIS/06-arcs-carre-cyan.png');
+      background-size: contain; background-repeat: no-repeat; opacity: .08; pointer-events: none;
+    }
+    .expertises__motif-bl {
+      position: absolute; bottom: 0; left: 0; width: 320px; height: 320px;
+      background-image: url('Identit\u00e9 visuelle/motifIGIS/12-reseau-points-carre-clair.png');
+      background-size: contain; background-repeat: no-repeat; opacity: .07; pointer-events: none;
+    }
+    .expertises__head { text-align: center; margin-bottom: 4rem; }
+    .expertises__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+
+    .expertise-card {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(43,166,222,.18);
+      border-radius: var(--radius-lg); padding: 2rem 1.75rem;
+      transition: background var(--transition), border-color var(--transition),
+                  transform var(--transition), box-shadow var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .expertise-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--ciel));
+      transform: scaleX(0); transition: transform var(--transition); transform-origin: left;
+    }
+    .expertise-card:hover {
+      background: rgba(43,166,222,.1); border-color: rgba(43,166,222,.45);
+      transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,.3);
+    }
+    .expertise-card:hover::before { transform: scaleX(1); }
+    .expertise-card__icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, rgba(43,166,222,.25), rgba(108,201,238,.15));
+      border-radius: 14px; border: 1px solid rgba(43,166,222,.3);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+    }
+    .expertise-card__icon svg { width: 28px; height: 28px; stroke: var(--cyan); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .expertise-card__title { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: .75rem; }
+    .expertise-card__desc  { font-size: .9rem; font-weight: 300; color: rgba(255,255,255,.65); line-height: 1.7; margin-bottom: 1.25rem; }
+    .expertise-card__tags  { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .expertise-card__tag   { font-size: .72rem; font-weight: 500; padding: .2rem .65rem; border-radius: 50px; background: rgba(43,166,222,.15); color: var(--ciel); border: 1px solid rgba(43,166,222,.2); }
+
+    /* ============================================================
+       SECTION ETUDES
+    ============================================================ */
+    #etudes { padding-block: 6rem; background: var(--gray-50); }
+    .etudes__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .etudes__filters { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .filter-btn {
+      padding: .45rem 1.1rem; border-radius: 50px; font-size: .83rem; font-weight: 600;
+      border: 1.5px solid var(--gray-100); background: var(--white); color: var(--gray-700);
+      cursor: pointer; transition: all var(--transition);
+    }
+    .filter-btn:hover, .filter-btn.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+    .etudes__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+
+    .etude-card {
+      background: var(--white); border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--gray-100);
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex; flex-direction: column;
+    }
+    .etude-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .etude-card__thumb { position: relative; height: 200px; overflow: hidden; }
+    .etude-card__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .etude-card:hover .etude-card__thumb img { transform: scale(1.06); }
+    .etude-card__thumb-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,44,82,.55), transparent); }
+    .etude-card__badge { position: absolute; top: .85rem; left: .85rem; }
+    .etude-card__body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .etude-card__meta { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: var(--gray-400); margin-bottom: .6rem; }
+    .etude-card__meta svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .etude-card__title   { font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: .6rem; }
+    .etude-card__excerpt { font-size: .87rem; color: var(--gray-700); line-height: 1.65; flex: 1; margin-bottom: 1.25rem; }
+    .etude-card__link { display: inline-flex; align-items: center; gap: .35rem; font-size: .85rem; font-weight: 600; color: var(--cyan); transition: gap var(--transition); }
+    .etude-card__link:hover { gap: .6rem; }
+    .etude-card__link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+    .etudes__more { text-align: center; margin-top: 3rem; }
+
+    /* ============================================================
+       SECTION CONTACT
+    ============================================================ */
+    #contact { padding-block: 6rem; background: var(--navy); position: relative; overflow: hidden; }
+    .contact__motif {
+      position: absolute; top: -60px; right: -60px; width: 480px; height: 480px;
+      background-image: url('Identit\u00e9 visuelle/motifIGIS/01-meandres-affiche-navy.png');
+      background-size: contain; background-repeat: no-repeat; opacity: .07; pointer-events: none;
+    }
+    .contact__motif-sq {
+      position: absolute; bottom: -40px; left: -40px; width: 320px; height: 320px;
+      background-image: url('Identit\u00e9 visuelle/motifIGIS/03-meandres-carre-navy.png');
+      background-size: contain; background-repeat: no-repeat; opacity: .08; pointer-events: none;
+    }
+    .contact__grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; position: relative; z-index: 1; }
+    .contact__desc { font-size: .97rem; font-weight: 300; color: rgba(255,255,255,.72); line-height: 1.8; margin-block: 1.25rem 2.5rem; }
+    .contact__items { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact__item { display: flex; align-items: flex-start; gap: 1rem; }
+    .contact__item-icon { width: 44px; height: 44px; flex-shrink: 0; background: rgba(43,166,222,.15); border-radius: 12px; border: 1px solid rgba(43,166,222,.25); display: flex; align-items: center; justify-content: center; }
+    .contact__item-icon svg { width: 20px; height: 20px; stroke: var(--cyan); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .contact__item-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; color: var(--cyan); margin-bottom: .15rem; }
+    .contact__item-value { font-size: .95rem; color: var(--white); }
+    .contact__item-value a { transition: color var(--transition); }
+    .contact__item-value a:hover { color: var(--ciel); }
+
+    .contact__form { background: rgba(255,255,255,.05); border: 1px solid rgba(43,166,222,.2); border-radius: var(--radius-lg); padding: 2.5rem; }
+    .form__title { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 1.75rem; }
+    .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form__group { margin-bottom: 1.25rem; }
+    .form__label { display: block; font-size: .82rem; font-weight: 600; color: rgba(255,255,255,.75); margin-bottom: .4rem; letter-spacing: .03em; }
+    .form__input, .form__select, .form__textarea {
+      width: 100%; padding: .75rem 1rem;
+      background: rgba(255,255,255,.08); border: 1.5px solid rgba(43,166,222,.25);
+      border-radius: var(--radius); color: var(--white); font-size: .92rem;
+      transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+    .form__input::placeholder, .form__textarea::placeholder { color: rgba(255,255,255,.35); }
+    .form__input:focus, .form__select:focus, .form__textarea:focus {
+      outline: none; border-color: var(--cyan);
+      background: rgba(43,166,222,.1); box-shadow: 0 0 0 3px rgba(43,166,222,.2);
+    }
+    .form__select option { background: var(--navy); color: var(--white); }
+    .form__textarea { resize: vertical; min-height: 130px; }
+    .form__consent { display: flex; align-items: flex-start; gap: .6rem; margin-bottom: 1.5rem; }
+    .form__consent input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; margin-top: .15rem; accent-color: var(--cyan); cursor: pointer; }
+    .form__consent label { font-size: .8rem; color: rgba(255,255,255,.6); line-height: 1.5; }
+    .form__consent a { color: var(--ciel); text-decoration: underline; }
+    .form__submit {
+      width: 100%; padding: .9rem;
+      background: linear-gradient(90deg, var(--cyan), #2295c8);
+      color: var(--white); border: none; border-radius: 50px;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
+      transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+    }
+    .form__submit:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,166,222,.35); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #site-footer { background: #0a1f3a; color: rgba(255,255,255,.6); padding-block: 3.5rem 2rem; }
+    .footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer__brand img { width: 120px; height: auto; margin-bottom: 1rem; object-fit: contain; }
+    .footer__brand p { font-size: .88rem; line-height: 1.7; max-width: 28ch; color: rgba(255,255,255,.5); }
+    .footer__col-title { font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--white); margin-bottom: 1.25rem; }
+    .footer__links { display: flex; flex-direction: column; gap: .6rem; }
+    .footer__links a { font-size: .875rem; color: rgba(255,255,255,.5); transition: color var(--transition); }
+    .footer__links a:hover { color: var(--cyan); }
+    .footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.08); font-size: .8rem; }
+    .footer__legal { display: flex; gap: 1.5rem; }
+    .footer__legal a { color: rgba(255,255,255,.5); transition: color var(--transition); }
+    .footer__legal a:hover { color: var(--cyan); }
+    .footer__socials { display: flex; gap: .6rem; }
+    .footer__social { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.55); transition: background var(--transition), color var(--transition), border-color var(--transition); }
+    .footer__social:hover { background: var(--cyan); border-color: var(--cyan); color: var(--white); }
+    .footer__social svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ============================================================
+       BACK-TO-TOP
+    ============================================================ */
+    #back-to-top {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 900;
+      width: 48px; height: 48px; background: var(--cyan); color: var(--white);
+      border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(43,166,222,.4);
+      opacity: 0; pointer-events: none; transform: translateY(12px);
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #back-to-top:hover   { background: #2295c8; transform: translateY(-2px); }
+    #back-to-top svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .hero__inner      { grid-template-columns: 1fr; gap: 3rem; padding-block: 4rem; }
+      .hero__visual     { display: none; }
+      .about__grid      { grid-template-columns: 1fr; gap: 3rem; }
+      .about__img-secondary { display: none; }
+      .expertises__grid { grid-template-columns: repeat(2, 1fr); }
+      .etudes__grid     { grid-template-columns: repeat(2, 1fr); }
+      .footer__grid     { grid-template-columns: 1fr 1fr; }
+      .contact__grid    { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media (max-width: 768px) {
+      :root { --header-h: 64px; }
+      .nav  { display: none; }
+      .burger { display: flex; }
+      .expertises__grid { grid-template-columns: 1fr; }
+      .etudes__grid     { grid-template-columns: 1fr; }
+      .footer__grid     { grid-template-columns: 1fr; gap: 2rem; }
+      .form__row        { grid-template-columns: 1fr; }
+      .hero__stats      { gap: 1.5rem; }
+      .about__pillars   { grid-template-columns: 1fr; }
+      .etudes__head     { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .contact__form  { padding: 1.5rem; }
+      .footer__bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     HEADER FIXE
+============================================================ -->
+<header id="site-header" role="banner">
+  <div class="container header__inner">
+
+    <!-- Logo + Nom du site -->
+    <a href="#hero" class="header__brand" aria-label="IGIS Group — Accueil">
+      <img
+        src="Identité visuelle/IGISLOGO/igis-erosion-fond-fonce.png"
+        alt="Logo IGIS Group"
+        class="header__logo"
+        width="120" height="44"
+        loading="eager"
+      />
+      <span class="header__site-name">IGIS <span>Group</span></span>
+    </a>
+
+    <!-- Navigation desktop -->
+    <nav class="nav" id="nav-desktop" aria-label="Navigation principale">
+      <ul class="nav__list" role="list">
+        <li class="nav__item"><a href="#hero"       aria-current="page">Accueil</a></li>
+        <li class="nav__item"><a href="#a-propos">À propos</a></li>
+        <li class="nav__item"><a href="#expertises">Expertises</a></li>
+        <li class="nav__item"><a href="#etudes">Études</a></li>
+        <li class="nav__cta"><a href="#contact" aria-label="Nous contacter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 2.19 2 2 0 012.06 0h3A2 2 0 017 1.72a12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.9a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.9v2.02z"/></svg>
+          Contact
+        </a></li>
+      </ul>
+    </nav>
+
+    <!-- Burger mobile -->
+    <button
+      class="burger" id="burger-btn"
+      aria-label="Ouvrir le menu de navigation"
+      aria-controls="nav-mobile" aria-expanded="false"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+
+  </div>
+</header>
+
+<!-- Menu mobile overlay -->
+<nav class="nav--mobile" id="nav-mobile" aria-label="Navigation mobile" aria-hidden="true">
+  <ul class="nav__list" role="list">
+    <li class="nav__item"><a href="#hero"       onclick="closeMenu()">Accueil</a></li>
+    <li class="nav__item"><a href="#a-propos"   onclick="closeMenu()">À propos</a></li>
+    <li class="nav__item"><a href="#expertises" onclick="closeMenu()">Expertises</a></li>
+    <li class="nav__item"><a href="#etudes"     onclick="closeMenu()">Études</a></li>
+    <li class="nav__item"><a href="#contact"    onclick="closeMenu()">Contact</a></li>
+    <li class="nav__cta"><a  href="#contact"    onclick="closeMenu()">Nous contacter</a></li>
+  </ul>
+</nav>
+
+
+<!-- ============================================================
+     SECTION HÉRO
+============================================================ -->
+<section id="hero" aria-label="Page d'accueil IGIS Group">
+  <div class="hero__bg-motif" aria-hidden="true" role="presentation"></div>
+  <div class="hero__overlay"  aria-hidden="true" role="presentation"></div>
+  <div class="hero__band"     aria-hidden="true" role="presentation"></div>
+
+  <div class="container">
+    <div class="hero__inner">
+
+      <!-- Contenu principal -->
+      <div class="hero__content">
+        <div class="hero__eyebrow" aria-hidden="true">
+          <span class="hero__eyebrow-line"></span>
+          <span class="hero__eyebrow-text">Bureau d'études — Géomatique & Environnement</span>
+        </div>
+
+        <h1 class="hero__title">
+          Nous mesurons<br>
+          <span class="highlight">ce qui change.</span>
+        </h1>
+
+        <p class="hero__subtitle">
+          IGIS Group mobilise l'expertise géomatique, le suivi environnemental
+          et les technologies spatiales pour accompagner vos projets d'ingénierie
+          du territoire — de la collecte terrain à la restitution cartographique.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#expertises" class="btn btn--primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Découvrir nos expertises
+          </a>
+          <a href="#contact" class="btn btn--outline">Nous contacter</a>
+        </div>
+
+        <div class="hero__stats" role="list" aria-label="Chiffres clés IGIS Group">
+          <div role="listitem">
+            <div class="hero__stat-value">5+</div>
+            <div class="hero__stat-label">Années d'expérience</div>
+          </div>
+          <div role="listitem">
+            <div class="hero__stat-value">100+</div>
+            <div class="hero__stat-label">Études réalisées</div>
+          </div>
+          <div role="listitem">
+            <div class="hero__stat-value">6</div>
+            <div class="hero__stat-label">Domaines d'expertise</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visuel droite -->
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__img-frame">
+          <img src="1763412480373.jpg" alt="Mission terrain IGIS Group — Levé topographique" loading="eager" fetchpriority="high" />
+          <div class="hero__img-badge">
+            <div class="hero__img-badge-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="hero__img-badge-text">
+              <strong>Mission terrain</strong>
+              <span>Levé & cartographie</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hero__scroll-hint" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    Défiler
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION À PROPOS
+============================================================ -->
+<section id="a-propos" aria-labelledby="apropos-title">
+  <div class="container">
+    <div class="about__grid">
+
+      <!-- Texte -->
+      <div class="about__text">
+        <span class="section-label" aria-hidden="true">À propos</span>
+        <h2 class="section-title" id="apropos-title">
+          Un bureau d'études ancré<br>dans la réalité du terrain
+        </h2>
+        <p class="about__intro">
+          Fondé sur une culture de rigueur scientifique et d'innovation technologique,
+          IGIS Group est un bureau d'études spécialisé en géomatique appliquée
+          et en ingénierie de l'environnement.
+        </p>
+        <p class="about__body">
+          Nos équipes pluridisciplinaires interviennent sur l'ensemble du cycle de vie
+          des projets : de la définition du protocole de collecte jusqu'à la production
+          de données géoréférencées exploitables, en passant par le traitement,
+          l'analyse spatiale et la restitution cartographique.
+        </p>
+        <p class="about__body">
+          IGIS Group s'engage à fournir des résultats fiables, reproductibles et
+          conformes aux standards internationaux — parce que la qualité de la donnée
+          est la base de toute décision éclairée.
+        </p>
+
+        <div class="about__pillars" role="list" aria-label="Nos piliers">
+          <div class="about__pillar" role="listitem">
+            <div class="about__pillar-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="about__pillar-text"><strong>Fiabilité</strong><span>Données certifiées</span></div>
+          </div>
+          <div class="about__pillar" role="listitem">
+            <div class="about__pillar-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="about__pillar-text"><strong>Précision</strong><span>Méthodologie rigoureuse</span></div>
+          </div>
+          <div class="about__pillar" role="listitem">
+            <div class="about__pillar-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="about__pillar-text"><strong>Innovation</strong><span>Technologies spatiales</span></div>
+          </div>
+          <div class="about__pillar" role="listitem">
+            <div class="about__pillar-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="about__pillar-text"><strong>Expertise</strong><span>Équipe pluridisciplinaire</span></div>
+          </div>
+        </div>
+
+        <a href="#contact" class="btn btn--dark">En savoir plus sur IGIS</a>
+      </div>
+
+      <!-- Visuel -->
+      <div class="about__visual" aria-hidden="true">
+        <img class="about__motif-bg" src="Identité visuelle/motifIGIS/03-meandres-carre-navy.png" alt="" role="presentation" loading="lazy" />
+        <img class="about__img-main" src="1766301197376.jpg" alt="Équipe IGIS Group en mission de terrain" loading="lazy" />
+        <img class="about__img-secondary" src="1789530625082.jpg" alt="Analyse cartographique" loading="lazy" />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION NOS EXPERTISES
+============================================================ -->
+<section id="expertises" aria-labelledby="expertises-title">
+  <div class="expertises__motif"    aria-hidden="true" role="presentation"></div>
+  <div class="expertises__motif-bl" aria-hidden="true" role="presentation"></div>
+
+  <div class="container">
+    <header class="expertises__head">
+      <span class="section-label" aria-hidden="true">Nos domaines</span>
+      <h2 class="section-title section-title--white" id="expertises-title">
+        Six expertises au service<br>de votre territoire
+      </h2>
+      <p class="section-lead section-lead--white">
+        De la géomatique à l'ingénierie environnementale, nos équipes couvrent
+        l'ensemble des disciplines nécessaires à la compréhension et au suivi du territoire.
+      </p>
+    </header>
+
+    <div class="expertises__grid" role="list" aria-label="Nos expertises">
+
+      <!-- Carte 1 -->
+      <article class="expertise-card" role="listitem">
+        <div class="expertise-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+        </div>
+        <h3 class="expertise-card__title">Géomatique & SIG</h3>
+        <p class="expertise-card__desc">
+          Conception de bases de données spatiales, analyse multi-couches, modélisation
+          et restitution cartographique pour tous types de projets d'aménagement
+          ou de gestion du territoire.
+        </p>
+        <div class="expertise-card__tags">
+          <span class="expertise-card__tag">QGIS</span>
+          <span class="expertise-card__tag">ArcGIS</span>
+          <span class="expertise-card__tag">PostGIS</span>
+          <span class="expertise-card__tag">Cartographie</span>
+        </div>
+      </article>
+
+      <!-- Carte 2 -->
+      <article class="expertise-card" role="listitem">
+        <div class="expertise-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M2 20h20M6 20V10l6-7 6 7v10"/><line x1="12" y1="20" x2="12" y2="13"/></svg>
+        </div>
+        <h3 class="expertise-card__title">Topographie & Levés</h3>
+        <p class="expertise-card__desc">
+          Levés topographiques haute précision, profils en travers, plans de masse
+          et implantations sur le terrain à l'aide des technologies GNSS RTK
+          et stations totales robotisées.
+        </p>
+        <div class="expertise-card__tags">
+          <span class="expertise-card__tag">GNSS RTK</span>
+          <span class="expertise-card__tag">Tachéomètre</span>
+          <span class="expertise-card__tag">Nivellement</span>
+        </div>
+      </article>
+
+      <!-- Carte 3 -->
+      <article class="expertise-card" role="listitem">
+        <div class="expertise-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="expertise-card__title">Télédétection & Drone</h3>
+        <p class="expertise-card__desc">
+          Acquisition et traitement d'images satellites et de vols photogrammétriques
+          par drone — orthophotos, MNT, MNS, classification d'occupation du sol
+          et détection de changements.
+        </p>
+        <div class="expertise-card__tags">
+          <span class="expertise-card__tag">Sentinel-2</span>
+          <span class="expertise-card__tag">LiDAR</span>
+          <span class="expertise-card__tag">Photogrammétrie</span>
+          <span class="expertise-card__tag">UAV</span>
+        </div>
+      </article>
+
+      <!-- Carte 4 -->
+      <article class="expertise-card" role="listitem">
+        <div class="expertise-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 010 8.49m-8.48-.01a6 6 0 010-8.49m11.31-2.82a10 10 0 010 14.14m-14.14 0a10 10 0 010-14.14"/></svg>
+        </div>
+        <h3 class="expertise-card__title">Suivi Érosion & Sédiments</h3>
+        <p class="expertise-card__desc">
+          Quantification des pertes en terre, modélisation de l'érosion hydrique
+          (RUSLE), suivi des dynamiques sédimentaires en cours d'eau et en milieu
+          côtier, cartographie des bassins versants.
+        </p>
+        <div class="expertise-card__tags">
+          <span class="expertise-card__tag">RUSLE</span>
+          <span class="expertise-card__tag">HEC-HMS</span>
+          <span class="expertise-card__tag">Sédimentologie</span>
+        </div>
+      </article>
+
+      <!-- Carte 5 -->
+      <article class="expertise-card" role="listitem">
+        <div class="expertise-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+        </div>
+        <h3 class="expertise-card__title">Hydrologie & Hydraulique</h3>
+        <p class="expertise-card__desc">
+          Modélisation hydrologique des bassins versants, études de crues, simulation
+          d'écoulements et de zones inondables, expertise pour la gestion des eaux
+          pluviales et la prévention des risques.
+        </p>
+        <div class="expertise-card__tags">
+          <span class="expertise-card__tag">HEC-RAS</span>
+          <span class="expertise-card__tag">SWAT</span>
+          <span class="expertise-card__tag">Inondation</span>
+        </div>
+      </article>
+
+      <!-- Carte 6 -->
+      <article class="expertise-card" role="listitem">
+        <div class="expertise-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 7 17 4 22 4c0 5-3 9-10 8z"/><path d="M12 12C12 7 7 4 2 4c0 5 3 9 10 8z"/></svg>
+        </div>
+        <h3 class="expertise-card__title">Environnement & Biodiversité</h3>
+        <p class="expertise-card__desc">
+          Inventaires floristiques et faunistiques, évaluation des impacts,
+          suivi des habitats naturels et cartographie de la végétation pour
+          vos études d'impact et vos dossiers réglementaires.
+        </p>
+        <div class="expertise-card__tags">
+          <span class="expertise-card__tag">EIE</span>
+          <span class="expertise-card__tag">Habitats</span>
+          <span class="expertise-card__tag">Inventaire</span>
+          <span class="expertise-card__tag">CORINE</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION NOS ÉTUDES
+============================================================ -->
+<section id="etudes" aria-labelledby="etudes-title">
+  <div class="container">
+
+    <div class="etudes__head">
+      <div>
+        <span class="section-label" aria-hidden="true">Réalisations</span>
+        <h2 class="section-title" id="etudes-title">Quelques-unes de nos études</h2>
+      </div>
+      <div class="etudes__filters" role="group" aria-label="Filtrer les études par catégorie">
+        <button class="filter-btn active" data-filter="all"        aria-pressed="true" >Toutes</button>
+        <button class="filter-btn"        data-filter="geomatique" aria-pressed="false">Géomatique</button>
+        <button class="filter-btn"        data-filter="hydrologie" aria-pressed="false">Hydrologie</button>
+        <button class="filter-btn"        data-filter="erosion"    aria-pressed="false">Érosion</button>
+        <button class="filter-btn"        data-filter="drone"      aria-pressed="false">Drone</button>
+      </div>
+    </div>
+
+    <div class="etudes__grid" id="etudes-grid" role="list" aria-label="Liste des études">
+
+      <!-- Étude 1 -->
+      <article class="etude-card" role="listitem" data-category="erosion">
+        <div class="etude-card__thumb">
+          <img src="1763412480373.jpg" alt="Cartographie de l'érosion hydrique — Bassin versant de Mangoro" loading="lazy" />
+          <div class="etude-card__thumb-overlay" aria-hidden="true"></div>
+          <div class="etude-card__badge"><span class="badge badge--cyan">Érosion</span></div>
+        </div>
+        <div class="etude-card__body">
+          <div class="etude-card__meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            2024
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="margin-left:.4rem"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Madagascar
+          </div>
+          <h3 class="etude-card__title">Cartographie de l'érosion hydrique — Bassin versant de Mangoro</h3>
+          <p class="etude-card__excerpt">
+            Application du modèle RUSLE couplé à une analyse SIG pour quantifier
+            les pertes en terre et identifier les zones prioritaires d'intervention
+            sur 2 400 km² de bassin versant.
+          </p>
+          <a href="#contact" class="etude-card__link" aria-label="En savoir plus — étude Mangoro">
+            En savoir plus
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Étude 2 -->
+      <article class="etude-card" role="listitem" data-category="drone geomatique">
+        <div class="etude-card__thumb">
+          <img src="1766301197376.jpg" alt="Levé photogrammétrique par drone — Zone côtière Toamasina" loading="lazy" />
+          <div class="etude-card__thumb-overlay" aria-hidden="true"></div>
+          <div class="etude-card__badge"><span class="badge badge--navy">Drone</span></div>
+        </div>
+        <div class="etude-card__body">
+          <div class="etude-card__meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            2024
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="margin-left:.4rem"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Toamasina
+          </div>
+          <h3 class="etude-card__title">Levé photogrammétrique par drone — Zone côtière Toamasina</h3>
+          <p class="etude-card__excerpt">
+            Production d'une orthophoto au 1/500 et d'un MNT centimétrique sur 18 km
+            de trait de côte pour le suivi des dynamiques sédimentaires et l'aide à la
+            gestion du littoral.
+          </p>
+          <a href="#contact" class="etude-card__link" aria-label="En savoir plus — étude Toamasina">
+            En savoir plus
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Étude 3 -->
+      <article class="etude-card" role="listitem" data-category="hydrologie">
+        <div class="etude-card__thumb">
+          <img src="1789530625082.jpg" alt="Modélisation hydrologique — Bassin versant Ikopa amont" loading="lazy" />
+          <div class="etude-card__thumb-overlay" aria-hidden="true"></div>
+          <div class="etude-card__badge"><span class="badge badge--ciel">Hydrologie</span></div>
+        </div>
+        <div class="etude-card__body">
+          <div class="etude-card__meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            2023
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="margin-left:.4rem"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Antananarivo
+          </div>
+          <h3 class="etude-card__title">Modélisation hydrologique — Bassin versant Ikopa amont</h3>
+          <p class="etude-card__excerpt">
+            Simulation des crues centennales et délimitation des zones inondables à
+            l'aide de HEC-HMS et HEC-RAS sur la plaine d'Antananarivo, pour le compte
+            de la Direction Générale des Ressources en Eau.
+          </p>
+          <a href="#contact" class="etude-card__link" aria-label="En savoir plus — étude Ikopa">
+            En savoir plus
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Étude 4 -->
+      <article class="etude-card" role="listitem" data-category="geomatique">
+        <div class="etude-card__thumb">
+          <img src="1763412480373.jpg" alt="Atlas cartographique national — Occupation du sol 2023" loading="lazy" />
+          <div class="etude-card__thumb-overlay" aria-hidden="true"></div>
+          <div class="etude-card__badge"><span class="badge badge--cyan">Géomatique</span></div>
+        </div>
+        <div class="etude-card__body">
+          <div class="etude-card__meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            2023
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="margin-left:.4rem"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            National
+          </div>
+          <h3 class="etude-card__title">Atlas cartographique — Occupation du sol Madagascar 2023</h3>
+          <p class="etude-card__excerpt">
+            Mise à jour de la base de données d'occupation du sol à l'échelle nationale
+            par classification supervisée d'images Sentinel-2 et validation terrain
+            sur 587 149 km².
+          </p>
+          <a href="#contact" class="etude-card__link" aria-label="En savoir plus — atlas cartographique">
+            En savoir plus
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Étude 5 -->
+      <article class="etude-card" role="listitem" data-category="erosion hydrologie">
+        <div class="etude-card__thumb">
+          <img src="1766301197376.jpg" alt="Plan anti-érosion — Corridor RN7 Fianarantsoa" loading="lazy" />
+          <div class="etude-card__thumb-overlay" aria-hidden="true"></div>
+          <div class="etude-card__badge"><span class="badge badge--navy">Érosion</span></div>
+        </div>
+        <div class="etude-card__body">
+          <div class="etude-card__meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            2022
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="margin-left:.4rem"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Fianarantsoa
+          </div>
+          <h3 class="etude-card__title">Plan anti-érosion — Corridor RN7 Fianarantsoa</h3>
+          <p class="etude-card__excerpt">
+            Diagnostic des processus érosifs (lavaka, ravinement, ruissellement) sur
+            320 km du corridor RN7 et préconisation d'ouvrages de protection des routes
+            et des zones habitées.
+          </p>
+          <a href="#contact" class="etude-card__link" aria-label="En savoir plus — plan anti-érosion RN7">
+            En savoir plus
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Étude 6 -->
+      <article class="etude-card" role="listitem" data-category="drone geomatique">
+        <div class="etude-card__thumb">
+          <img src="1789530625082.jpg" alt="Suivi végétation NDVI — Parc national Ranomafana" loading="lazy" />
+          <div class="etude-card__thumb-overlay" aria-hidden="true"></div>
+          <div class="etude-card__badge"><span class="badge badge--ciel">Environnement</span></div>
+        </div>
+        <div class="etude-card__body">
+          <div class="etude-card__meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            2022
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="margin-left:.4rem"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Ranomafana
+          </div>
+          <h3 class="etude-card__title">Suivi végétation NDVI — Parc national Ranomafana</h3>
+          <p class="etude-card__excerpt">
+            Analyse multitemporelle de l'indice NDVI sur 415 km² de forêt tropicale
+            humide par séries temporelles Sentinel-2 pour le suivi de la déforestation
+            et de la régénération forestière.
+          </p>
+          <a href="#contact" class="etude-card__link" aria-label="En savoir plus — suivi végétation Ranomafana">
+            En savoir plus
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="etudes__more">
+      <a href="#contact" class="btn btn--dark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        Voir toutes nos études
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION CONTACT
+============================================================ -->
+<section id="contact" aria-labelledby="contact-title">
+  <div class="contact__motif"    aria-hidden="true" role="presentation"></div>
+  <div class="contact__motif-sq" aria-hidden="true" role="presentation"></div>
+
+  <div class="container">
+    <div class="contact__grid">
+
+      <!-- Infos -->
+      <div class="contact__info">
+        <span class="section-label" aria-hidden="true">Contactez-nous</span>
+        <h2 class="section-title section-title--white" id="contact-title">
+          Parlons de<br>votre projet
+        </h2>
+        <p class="contact__desc">
+          Vous avez un projet de cartographie, d'étude hydrologique ou de suivi
+          environnemental ? Notre équipe est disponible pour étudier vos besoins
+          et vous proposer une réponse adaptée.
+        </p>
+
+        <address>
+          <ul class="contact__items" aria-label="Coordonnées IGIS Group">
+            <li class="contact__item">
+              <div class="contact__item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="contact__item-label">Adresse</div>
+                <div class="contact__item-value">Antananarivo, Madagascar<br><small style="opacity:.7">Lot II M 85 Ambanidia</small></div>
+              </div>
+            </li>
+            <li class="contact__item">
+              <div class="contact__item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 2.19 2 2 0 012.06 0h3A2 2 0 017 1.72a12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.9a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.9v2.02z"/></svg>
+              </div>
+              <div>
+                <div class="contact__item-label">Téléphone</div>
+                <div class="contact__item-value"><a href="tel:+261320000000">+261 32 00 000 00</a></div>
+              </div>
+            </li>
+            <li class="contact__item">
+              <div class="contact__item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div class="contact__item-label">Email</div>
+                <div class="contact__item-value"><a href="mailto:contact@igis-group.mg">contact@igis-group.mg</a></div>
+              </div>
+            </li>
+            <li class="contact__item">
+              <div class="contact__item-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <div class="contact__item-label">Disponibilité</div>
+                <div class="contact__item-value">Lun – Ven, 08 h 00 – 17 h 00</div>
+              </div>
+            </li>
+          </ul>
+        </address>
+      </div>
+
+      <!-- Formulaire -->
+      <div class="contact__form" role="form" aria-labelledby="form-title">
+        <h3 class="form__title" id="form-title">Envoyer un message</h3>
+        <form method="POST" action="#" id="contact-form" novalidate aria-describedby="form-status">
+
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="fname">Prénom <span aria-hidden="true">*</span><span class="sr-only">(requis)</span></label>
+              <input class="form__input" type="text" id="fname" name="fname" placeholder="Jean" required autocomplete="given-name" aria-required="true" />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="lname">Nom <span aria-hidden="true">*</span><span class="sr-only">(requis)</span></label>
+              <input class="form__input" type="text" id="lname" name="lname" placeholder="Rakoto" required autocomplete="family-name" aria-required="true" />
+            </div>
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="email">Adresse email <span aria-hidden="true">*</span><span class="sr-only">(requis)</span></label>
+            <input class="form__input" type="email" id="email" name="email" placeholder="jean.rakoto@exemple.mg" required autocomplete="email" aria-required="true" />
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="organisation">Organisation</label>
+            <input class="form__input" type="text" id="organisation" name="organisation" placeholder="Votre entreprise ou institution" autocomplete="organization" />
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="sujet">Domaine d'intérêt <span aria-hidden="true">*</span><span class="sr-only">(requis)</span></label>
+            <select class="form__select" id="sujet" name="sujet" required aria-required="true">
+              <option value="" disabled selected>Sélectionner un domaine…</option>
+              <option value="geomatique">Géomatique & SIG</option>
+              <option value="topographie">Topographie & Levés</option>
+              <option value="teledetection">Télédétection & Drone</option>
+              <option value="erosion">Suivi Érosion & Sédiments</option>
+              <option value="hydrologie">Hydrologie & Hydraulique</option>
+              <option value="environnement">Environnement & Biodiversité</option>
+              <option value="autre">Autre demande</option>
+            </select>
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="message">Message <span aria-hidden="true">*</span><span class="sr-only">(requis)</span></label>
+            <textarea class="form__textarea" id="message" name="message" rows="5" placeholder="Décrivez votre projet ou votre besoin en quelques lignes…" required aria-required="true"></textarea>
+          </div>
+
+          <div class="form__consent">
+            <input type="checkbox" id="consent" name="consent" required aria-required="true" />
+            <label for="consent">
+              J'accepte que mes données soient traitées par IGIS Group dans le cadre de cette demande de contact, conformément à notre <a href="#">politique de confidentialité</a>.
+            </label>
+          </div>
+
+          <div id="form-status" role="status" aria-live="polite" aria-atomic="true"></div>
+
+          <button type="submit" class="form__submit" aria-label="Envoyer le message de contact">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Envoyer le message
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <img src="Identité visuelle/IGISLOGO/igis-erosion-blanc.png" alt="Logo IGIS Group" loading="lazy" width="120"/>
+        <p>Bureau d'études en géomatique et ingénierie de l'environnement.<br>Nous mesurons ce qui change.</p>
+      </div>
+
+      <nav aria-label="Navigation footer — Pages">
+        <p class="footer__col-title">Navigation</p>
+        <ul class="footer__links">
+          <li><a href="#hero">Accueil</a></li>
+          <li><a href="#a-propos">À propos</a></li>
+          <li><a href="#expertises">Expertises</a></li>
+          <li><a href="#etudes">Études</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Navigation footer — Expertises">
+        <p class="footer__col-title">Expertises</p>
+        <ul class="footer__links">
+          <li><a href="#expertises">Géomatique & SIG</a></li>
+          <li><a href="#expertises">Topographie</a></li>
+          <li><a href="#expertises">Télédétection</a></li>
+          <li><a href="#expertises">Érosion & Sédiments</a></li>
+          <li><a href="#expertises">Hydrologie</a></li>
+          <li><a href="#expertises">Environnement</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <p class="footer__col-title">Contact rapide</p>
+        <ul class="footer__links">
+          <li><a href="mailto:contact@igis-group.mg">contact@igis-group.mg</a></li>
+          <li><a href="tel:+261320000000">+261 32 00 000 00</a></li>
+          <li style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.5rem">Lot II M 85 Ambanidia<br>Antananarivo, Madagascar</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; 2026 IGIS Group. Tous droits réservés.</span>
+      <nav class="footer__legal" aria-label="Liens légaux">
+        <a href="#">Mentions légales</a>
+        <a href="#">Politique de confidentialité</a>
+        <a href="#">CGU</a>
+      </nav>
+      <div class="footer__socials" aria-label="Réseaux sociaux IGIS Group">
+        <a href="https://www.linkedin.com/company/igis-group/" class="footer__social" aria-label="LinkedIn IGIS Group" rel="noopener noreferrer" target="_blank">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Twitter IGIS Group" rel="noopener noreferrer" target="_blank">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+        </a>
+        <a href="#" class="footer__social" aria-label="Facebook IGIS Group" rel="noopener noreferrer" target="_blank">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     BOUTON RETOUR EN HAUT
+============================================================ -->
+<button id="back-to-top" aria-label="Retourner en haut de la page" title="Haut de page">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script>
+  /* --- Header scroll shadow --- */
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* --- Burger / menu mobile --- */
+  const burger = document.getElementById('burger-btn');
+  const navMob = document.getElementById('nav-mobile');
+
+  function closeMenu() {
+    burger.setAttribute('aria-expanded', 'false');
+    navMob.classList.remove('is-open');
+    navMob.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  burger.addEventListener('click', () => {
+    const isOpen = burger.getAttribute('aria-expanded') === 'true';
+    if (isOpen) {
+      closeMenu();
+    } else {
+      burger.setAttribute('aria-expanded', 'true');
+      navMob.classList.add('is-open');
+      navMob.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!header.contains(e.target) && !navMob.contains(e.target)) closeMenu();
+  });
+
+  /* --- Back-to-top --- */
+  const btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* --- Filtres études --- */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const etudeCards = document.querySelectorAll('#etudes-grid .etude-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
+      etudeCards.forEach(card => {
+        const cats = card.dataset.category || '';
+        card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
+      });
+    });
+  });
+
+  /* --- Formulaire --- */
+  const form       = document.getElementById('contact-form');
+  const formStatus = document.getElementById('form-status');
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const btn = form.querySelector('.form__submit');
+      btn.disabled = true; btn.textContent = 'Envoi en cours\u2026';
+      setTimeout(() => {
+        formStatus.textContent = '\u2705 Message envoy\u00e9 ! Nous vous r\u00e9pondrons dans les plus brefs d\u00e9lais.';
+        formStatus.style.cssText = 'margin-bottom:1rem;padding:.75rem 1rem;background:rgba(43,166,222,.15);border-radius:8px;color:#6CC9EE;font-size:.9rem;';
+        form.reset();
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Envoyer le message';
+      }, 1200);
+    });
+  }
+
+  /* --- Active nav on scroll --- */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+  const ioObs    = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach(link => {
+        link.removeAttribute('aria-current');
+        if (link.getAttribute('href') === '#' + entry.target.id) link.setAttribute('aria-current', 'page');
+      });
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => ioObs.observe(s));
+</script>
+
+</body>
+</html>
